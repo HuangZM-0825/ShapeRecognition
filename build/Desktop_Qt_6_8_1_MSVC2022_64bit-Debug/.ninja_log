@@ -1,0 +1,11 @@
+# ninja log v6
+27	449	7594893021005366	ShapeRecognition_autogen/timestamp	4e27bb0886987ab0
+27	449	7594893021005366	ShapeRecognition_autogen/mocs_compilation.cpp	4e27bb0886987ab0
+27	449	7594893021005366	C:/Users/cgiks/Desktop/Shape-recognition-master/Shape recognition_QT/ShapeRecognition/build/Desktop_Qt_6_8_1_MSVC2022_64bit-Debug/ShapeRecognition_autogen/timestamp	4e27bb0886987ab0
+27	449	7594893021005366	C:/Users/cgiks/Desktop/Shape-recognition-master/Shape recognition_QT/ShapeRecognition/build/Desktop_Qt_6_8_1_MSVC2022_64bit-Debug/ShapeRecognition_autogen/mocs_compilation.cpp	4e27bb0886987ab0
+461	1572	7594893021850739	CMakeFiles/ShapeRecognition.dir/source/IOMap.cpp.obj	5bbd01ba17a4351a
+470	1668	7594893021940740	CMakeFiles/ShapeRecognition.dir/source/EmergencyStop.cpp.obj	11e7b5980f5f7d69
+464	2445	7594893021880742	CMakeFiles/ShapeRecognition.dir/source/DeviceControl.cpp.obj	92ff6f47dbbe8961
+473	2486	7594893021970739	CMakeFiles/ShapeRecognition.dir/source/MachineController.cpp.obj	47cb87a00bc1c8d
+453	2706	7594893021771022	CMakeFiles/ShapeRecognition.dir/ShapeRecognition_autogen/mocs_compilation.cpp.obj	f8e61535d7ef0dff
+456	2717	7594893021790746	CMakeFiles/ShapeRecognition.dir/main.cpp.obj	857291cfd396dfe5
