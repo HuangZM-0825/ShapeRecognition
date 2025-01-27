@@ -15,6 +15,12 @@ class MachineController : public QObject
     Q_OBJECT
 
 public:
+    // -----------------------------------------------------
+    // 檢MachineController 類別的建構子 (Constructor)
+    // 參數 IOMap& ioMap ：指向本系統的 I/O 模擬表，用來讀取感測器／寫入驅動輸出。
+    // 參數 QObject* parent ：為了符合 Qt 物件層級，預設為 nullptr 表示此物件無父。
+    // 此方式可保證程式中只有一個主要 IOMap，維持 I/O 狀態一致。
+    // -----------------------------------------------------
     explicit MachineController(IOMap& ioMap, QObject* parent = nullptr);
 
     void runManual();      // 執行手動模式
@@ -32,10 +38,20 @@ public:
     int getCircleCount() const { return circleCount; }
     int getSquareCount() const { return squareCount; }
 
+    // 回報「目前是否正在執行循環 (Cycle)」的狀態
+    // 只在 isCycleRunning() == false 時，才再次啟動單一循環流程。
     bool isCycleRunning() const;
 
+
 signals:
+    // -----------------------------------------------------
+    // Qt 的 signal
+    // 當 MachineController 內部更新了「圓料數量 (circleCount)」或「方料數量 (squareCount)」時，就會發出該訊號。
+    // Qt 物件（如 UI 介面 MainWindow）可以透過 connect(...) 監聽此訊號，並在收到時進行介面更新。
+    // UI 端只要接收這個訊號，就能馬上把最新數量顯示到 UI 上。
+    // -----------------------------------------------------
     void countsUpdated(int circleCount, int squareCount);
+
 
 private:
     IOMap& ioMap; // 引用 IOMap，與 IO 交互，不會拷貝 IOMap，而是直接操作傳遞進來的 IOMap 實例。

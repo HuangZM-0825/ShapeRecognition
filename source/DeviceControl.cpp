@@ -6,6 +6,32 @@
 #include "MachineController.h"
 #include "EmergencyStop.h"
 
+
+/**
+ * @brief 核心設備控制的無限迴圈函式。
+ *
+ * 透過 `runDeviceControl()`，系統會不斷地檢查以下狀態：
+ *   1. **急停 (EmergencyStop)**：若偵測到 `Input::EmergencyStop == true`，則先確保已切換至復歸模式 (X13)，
+ *      再呼叫 `emergencyStop.handleReset()` 進行復歸流程。
+ *   2. **復歸模式 (ModeSwitch_Left)**：若偵測到復歸模式，則將 `currentMode` 設定為 "Reset"，
+ *      並在模式發生變化時呼叫 `handleReset()`，將設備回到原點。
+ *   3. **工作模式 (ModeSwitch_Right)**：若偵測到工作模式，根據手動/連續/單一循環來設定 `currentMode`，
+ *      並在模式改變時呼叫對應的 `runManual()`、`runContinuous()` 或 `runSingle()`。
+ *   4. **模式未改變時的特殊處理**：
+ *      - 對於單一循環模式，若先前已執行完成 (`isCycleRunning() == false`)，可再次啟動新的單一循環。
+ *
+ * 流程說明：
+ *   - 使用者於外部 UI 切換模式時，系統會在本函式的 while 迴圈中檢測到，
+ *     並立即呼叫相應的函式執行後續動作 (例如 `machineCtrl.runManual()`)。
+ *   - 若發生急停，則跳過後續模式判斷，優先處理復歸，確保安全。
+ *   - 為避免佔用過多 CPU，最後以 `std::this_thread::sleep_for(...)` 做短暫延遲再重複檢查。
+ *
+ * @param ioMap      共享的 IOMap，用以讀/寫輸入輸出狀態。
+ * @param machineCtrl 機器控制器，內含手動、單一循環、連續循環等模式實作。
+ *
+ * @note 每次迴圈都使用 `previousMode` 與 `currentMode` 來判斷模式是否改變，
+ *       若改變才執行對應動作，避免重複進入同一模式。
+ */
 void runDeviceControl(IOMap& ioMap, MachineController& machineCtrl) {
 
     // 使用傳遞進來的 MachineController 實例

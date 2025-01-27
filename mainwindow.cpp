@@ -3,6 +3,7 @@
 #include <QTimer>
 #include <QButtonGroup>
 
+
 // 篶钡Μ IOMap & 籔 MachineController &
 // 硂ボ⊿Τ MainWindow ず场︽篶穝 IOMap ┪ MachineControllerτ琌ㄏノ场肚秈ㄓンノ把σ&癬ㄓ
 MainWindow::MainWindow(IOMap& ioRef, MachineController& mCtrl, QWidget* parent)
@@ -26,6 +27,7 @@ MainWindow::MainWindow(IOMap& ioRef, MachineController& mCtrl, QWidget* parent)
     updateCounts(machineCtrl.getCircleCount(), machineCtrl.getSquareCount()); // 陪ボ璸计竟
 }
 
+
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -39,7 +41,6 @@ void MainWindow::updateLightStatus(QLabel* label, bool lightOn,
 {
     label->setStyleSheet(lightOn ? onStyle : offStyle);
 }
-
 static const QString triColorDefaultStyle =
 "background-color: lightgray; border: 1px solid black; border-radius: 5px; color: darkblue; font-size: 10px; font-weight: bold; padding: 5px;";
 static const QString redLightStyle =

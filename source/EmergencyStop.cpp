@@ -1,7 +1,28 @@
 #include "EmergencyStop.h"
 
+/**
+ * @brief 建構子：將本系統的 IOMap 物件注入 EmergencyStop 物件中
+ *
+ * 透過此建構子，EmergencyStop 能直接操作傳入的 `ioMap` 進行
+ * 讀取輸入 (如 EmergencyStop 狀態) 與 寫入輸出 (如停止所有動作)。
+ *
+ * @param ioMap 系統共用的 IOMap 實例，用於模擬或實際存取 I/O 點位。
+ */
 EmergencyStop::EmergencyStop(IOMap& ioMap) : ioMap(ioMap) {}
 
+/**
+ * @brief 執行「復歸」(Reset) 流程的函式。
+ *
+ * 此函式主要負責在「復歸模式」下，將系統恢復至原點，包含：
+ *   1. 檢查「是否處於復歸模式 (X13)」及「非手動模式 (X15)」，
+ *      若不符合，則顯示錯誤並暫停流程。
+ *   2. 等待使用者按下 StartReset (X20) 按鈕後，開始實際復歸動作。
+ *   3. 透過後臺執行緒閃爍黃燈 (YellowLight)，直到復歸流程完成。
+ *   4. 將垂直缸上升 (模擬下限未觸發、上限觸發) 與龍門手臂移至初始位置 (ArmPosition)。
+ *   5. 最後關閉黃燈、點亮綠燈 (GreenLight) 表示復歸完成，並將相關按鈕訊號復歸至預設值。
+ *
+ * @return 無回傳。執行結束即表示復歸流程已完成或中斷。
+ */
 void EmergencyStop::handleReset() {
     std::cout << "[RESET] Starting system reset..." << std::endl;
     resetCompleted = false;

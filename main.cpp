@@ -7,8 +7,24 @@
 #include "header/DeviceControl.h" // 包含 runDeviceControl()
 #include "header/MachineController.h"
 
+/**
+ * @brief 主函式入口點，帶有 (argc, argv) 以支援命令列參數。
+ *
+ * 這是 C++ 的標準 main() 函式，但 Qt 程式使用時也會將 argc/argv 轉給 QApplication，用於初始化 GUI 環境。
+ * 
+ * Qt 程式通常需要從 main 函式傳遞參數給 QApplication，
+ * 以正確初始化 Qt 內部機制（事件迴圈、GUI 顯示等）。
+ */
 int main(int argc, char* argv[])
 {
+    /**
+     * @brief 建立 Qt 應用程式物件 (QApplication)。
+     *
+     * 此物件負責管理整個 GUI 事件迴圈、資源與初始化流程。
+     * `argc`、`argv` 可用於解析命令列參數，若無特別需要也可直接帶入。
+     * 
+     * 通常要在主函式最前面建立，最後 a.exec() 進入事件迴圈，使 GUI 能互動。
+     */
     QApplication a(argc, argv);
 
     // (1) 產生一次 IOMap 物件，並命名 sharedIOMap。  
