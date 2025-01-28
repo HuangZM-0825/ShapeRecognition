@@ -56,7 +56,7 @@
 ## 展示影片
 
 1. **連結到外部平台**  
-   - [YouTube](https://www.youtube.com/)
+   - [YouTube](https://youtu.be/PynCtSuIcUI)
 
 ---
 
